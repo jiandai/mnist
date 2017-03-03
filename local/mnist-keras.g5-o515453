@@ -1,0 +1,63 @@
+(60000, 28, 28)
+Train on 60000 samples, validate on 10000 samples
+Epoch 1/10
+1s - loss: 0.3776 - acc: 0.8797 - val_loss: 0.0809 - val_acc: 0.9744
+Epoch 2/10
+1s - loss: 0.0921 - acc: 0.9712 - val_loss: 0.0468 - val_acc: 0.9854
+Epoch 3/10
+1s - loss: 0.0672 - acc: 0.9791 - val_loss: 0.0375 - val_acc: 0.9881
+Epoch 4/10
+1s - loss: 0.0533 - acc: 0.9831 - val_loss: 0.0325 - val_acc: 0.9886
+Epoch 5/10
+1s - loss: 0.0462 - acc: 0.9857 - val_loss: 0.0316 - val_acc: 0.9887
+Epoch 6/10
+1s - loss: 0.0400 - acc: 0.9875 - val_loss: 0.0297 - val_acc: 0.9896
+Epoch 7/10
+1s - loss: 0.0366 - acc: 0.9881 - val_loss: 0.0236 - val_acc: 0.9922
+Epoch 8/10
+1s - loss: 0.0335 - acc: 0.9891 - val_loss: 0.0273 - val_acc: 0.9903
+Epoch 9/10
+1s - loss: 0.0303 - acc: 0.9901 - val_loss: 0.0225 - val_acc: 0.9926
+Epoch 10/10
+1s - loss: 0.0271 - acc: 0.9913 - val_loss: 0.0243 - val_acc: 0.9917
+Baseline Error: 0.83%
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@rescomp7008>
+Subject: Job 515453: <python mnist-keras.py> in cluster <rescomp> Done
+
+Job <python mnist-keras.py> was submitted from host <resmisc301> by user <daij12> in cluster <rescomp>.
+Job was executed on host(s) <5*rescomp7008>, in queue <gpu>, as user <daij12> in cluster <rescomp>.
+</gne/home/daij12> was used as the home directory.
+</gne/home/daij12/gitLocal/mlTst> was used as the working directory.
+Started at Tue Feb 14 12:24:21 2017
+Results reported on Tue Feb 14 12:25:09 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+python mnist-keras.py
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               36.79 sec.
+    Max Memory :             1 GB
+    Total Requested Memory : 15.00 GB
+    Delta Memory :           14.00 GB
+    (Delta: the difference between Total Requested Memory and Max Memory.)
+    Max Swap :               174 GB
+    Max Processes :          8
+    Max Threads :            10
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <mnist-keras.g5-e515453> for stderr output of this job.
+

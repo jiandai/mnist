@@ -1,0 +1,50 @@
+(60000, 28, 28)
+Train on 60000 samples, validate on 10000 samples
+Epoch 1/4
+132s - loss: 0.3786 - acc: 0.8789 - val_loss: 0.0810 - val_acc: 0.9741
+Epoch 2/4
+132s - loss: 0.0927 - acc: 0.9710 - val_loss: 0.0460 - val_acc: 0.9858
+Epoch 3/4
+132s - loss: 0.0676 - acc: 0.9791 - val_loss: 0.0358 - val_acc: 0.9878
+Epoch 4/4
+132s - loss: 0.0539 - acc: 0.9830 - val_loss: 0.0326 - val_acc: 0.9897
+Baseline Error: 1.03%
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@rescomp7007>
+Subject: Job 505235: <python mnist-keras.py> in cluster <rescomp> Done
+
+Job <python mnist-keras.py> was submitted from host <resmisc302> by user <daij12> in cluster <rescomp>.
+Job was executed on host(s) <rescomp7007>, in queue <gpu>, as user <daij12> in cluster <rescomp>.
+</gne/home/daij12> was used as the home directory.
+</gne/home/daij12/gitLocal/mlTst> was used as the working directory.
+Started at Tue Feb 14 07:15:22 2017
+Results reported on Tue Feb 14 07:26:24 2017
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+python mnist-keras.py
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :               603.44 sec.
+    Total Requested Memory : 3.00 GB
+    Delta Memory :           -
+    (Delta: the difference between Total Requested Memory and Max Memory.)
+    Max Swap :               159 GB
+    Max Processes :          7
+    Max Threads :            8
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <mnist-keras.e505235> for stderr output of this job.
+

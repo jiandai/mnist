@@ -1,0 +1,4 @@
+Using Theano backend.
+Using gpu device 0: Tesla M60 (CNMeM is enabled with initial size: 95.0% of memory, cuDNN 5103)
+/gne/home/daij12/.local/lib/python2.7/site-packages/theano/sandbox/cuda/__init__.py:600: UserWarning: Your cuDNN version is more recent than the one Theano officially supports. If you see any problems, try updating Theano or downgrading cuDNN to version 5.
+  warnings.warn(warn)

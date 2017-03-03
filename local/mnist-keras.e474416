@@ -1,0 +1,15 @@
+Using Theano backend.
+Traceback (most recent call last):
+  File "mnist-keras.py", line 97, in <module>
+    model.fit(X_train, y_train, validation_data=(X_test, y_test), nb_epoch=10, batch_size=200, verbose=2)
+  File "/gne/home/daij12/.local/lib/python2.7/site-packages/keras/models.py", line 672, in fit
+    initial_epoch=initial_epoch)
+  File "/gne/home/daij12/.local/lib/python2.7/site-packages/keras/engine/training.py", line 1196, in fit
+    initial_epoch=initial_epoch)
+  File "/gne/home/daij12/.local/lib/python2.7/site-packages/keras/engine/training.py", line 891, in _fit_loop
+    outs = f(ins_batch)
+  File "/gne/home/daij12/.local/lib/python2.7/site-packages/keras/backend/theano_backend.py", line 959, in __call__
+    return self.function(*inputs)
+  File "/gne/home/daij12/.local/lib/python2.7/site-packages/theano/compile/function_module.py", line 859, in __call__
+    outputs = self.fn()
+KeyboardInterrupt
