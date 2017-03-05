@@ -18,6 +18,15 @@ better test notebook:
 https://www.kaggle.com/daij1492/digit-recognizer/notebooka16a65b39d
 Your submission scored 0.98886, rank 312 out of 1385, /w 10 epoch
 Your submission scored 0.99271, rank 129 out of 1385, /w 100 epoch
+
+bsub -q gpu -n 32 "python mnist-keras.py"
+>32 may end up /w Too many processors requested. Job not submitted.
+
+Your submission scored 0.99171, rank 129 out of 1385, /w 500 epoch, over-fitted
+ver 20170304.1 by jian: try out "rg" model, <.4 accuracy, convolution is the key
+ver 20170304.2 by jian: try out "x" model, /w 100epoch
+Your submission scored 0.99214, which is not an improvement of your best score. Keep trying!
+
 '''
 
 
@@ -116,9 +125,22 @@ def baseline_model():
 
 def larger_model():
 	model = Sequential()
-	model.add(Convolution2D(30, 5, 5, border_mode='valid', input_shape=(1, 28, 28), activation='relu'))
+	model.add(Convolution2D(30, 5, 5, border_mode='valid', input_shape=(1, size, size), activation='relu')) # => 30*24*24
+	model.add(MaxPooling2D(pool_size=(2, 2))) # => 30*12*12
+	model.add(Convolution2D(15, 3, 3, activation='relu')) # => 15*10*10
+	model.add(MaxPooling2D(pool_size=(2, 2))) # => 15*5*5
+	model.add(Dropout(0.2))
+	model.add(Flatten())
+	model.add(Dense(128, activation='relu'))
+	model.add(Dense(50, activation='relu'))
+	model.add(Dense(num_classes, activation='softmax'))
+	model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+	return model
+
+def rg_model():
+	model = Sequential()
+	model.add(MaxPooling2D(pool_size=(2, 2),input_shape=(1, size, size)))
 	model.add(MaxPooling2D(pool_size=(2, 2)))
-	model.add(Convolution2D(15, 3, 3, activation='relu'))
 	model.add(MaxPooling2D(pool_size=(2, 2)))
 	model.add(Dropout(0.2))
 	model.add(Flatten())
@@ -128,13 +150,37 @@ def larger_model():
 	model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 	return model
 
+
+'''
+https://github.com/fchollet/keras/issues/1984
+border_mode:
+The valid means there is no padding around input or feature map, while same means there are some padding around input or feature map, making the output feature map's size same as the input's
+'''
+
+def x_model():
+	model = Sequential()
+	model.add(Convolution2D(16,7,7, border_mode='valid', input_shape=(1, size, size), activation='relu')) # => 16*22*22
+	model.add(MaxPooling2D(pool_size=(2, 2))) # => 16*11*11
+	model.add(Convolution2D(32, 4, 4, activation='relu')) # => 32*8*8
+	model.add(MaxPooling2D(pool_size=(2, 2))) # => 32*4*4
+	model.add(Dropout(0.2))
+	model.add(Flatten())
+	model.add(Dense(128, activation='relu'))
+	model.add(Dense(32, activation='relu'))
+	model.add(Dense(num_classes, activation='softmax'))
+	model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+	return model
+
 #model = baseline_model()
-model = larger_model()
+#model = larger_model()
+#model = rg_model()
+model = x_model()
 
 # train 
+#N_EPOCH = 3
 #N_EPOCH = 10
 N_EPOCH = 100
-#N_EPOCH = 3
+#N_EPOCH = 500
 model.fit(X_train, Y_train, nb_epoch=N_EPOCH, batch_size=200, verbose=2)
 #model.fit(X_train, y_train, validation_data=(X_test, y_test), nb_epoch=N_EPOCH, batch_size=200, verbose=2)
 #scores = model.evaluate(X_train, Y_train, verbose=0)
@@ -159,7 +205,10 @@ predictions = model.predict_classes(X_test, verbose=0)
 submissions=pd.DataFrame({"ImageId": list(range(1,len(predictions)+1)),"Label": predictions})
 print(submissions.head())
 #submissions.to_csv("predicted.csv", index=False)
-submissions.to_csv("predicted_100epoch.csv", index=False)
+#submissions.to_csv("predicted_100epoch.csv", index=False)
+#submissions.to_csv("predicted_500epoch.csv", index=False) # here we exhausted the potential of this architecture "larger model"
+#submissions.to_csv("predicted_rg.csv", index=False) # here we exhausted the potential of this architecture "larger model"
+submissions.to_csv("predicted_x.csv", index=False) # here we exhausted the potential of this architecture "larger model"
 
 
 
