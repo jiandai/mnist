@@ -1,11 +1,7 @@
 '''
-ver 20170212 by jian:
-	ref http://machinelearningmastery.com/handwritten-digit-recognition-using-convolutional-neural-networks-python-keras/
+ver 20170212 by jian: script based off Jason Brownlee's tutoriral http://machinelearningmastery.com/handwritten-digit-recognition-using-convolutional-neural-networks-python-keras/
 ver 20170214 by jian: run on server /w gpu
 ver 20170301 by jian: use kaggle source
-batch command:
-bsub -q gpu -n 4 "python mnist-keras.py"
-bsub -q gpu -n 8 "python mnist-keras.py"
 ver 20170302.1 by jian: separate from general ML exercise repos
 ver 20170302.2 by jian: try out kaggle notebook kernel
 ref notebook from a fellow player:
@@ -16,21 +12,26 @@ a test script:
 https://www.kaggle.com/daij1492/digit-recognizer/test1
 better test notebook:
 https://www.kaggle.com/daij1492/digit-recognizer/notebooka16a65b39d
+
+some submission records:
 Your submission scored 0.98886, rank 312 out of 1385, /w 10 epoch
 Your submission scored 0.99271, rank 129 out of 1385, /w 100 epoch
-
-bsub -q gpu -n 32 "python mnist-keras.py"
->32 may end up /w Too many processors requested. Job not submitted.
-
 Your submission scored 0.99171, rank 129 out of 1385, /w 500 epoch, over-fitted
+
 ver 20170304.1 by jian: try out "rg" model, <.4 accuracy, convolution is the key
 ver 20170304.2 by jian: try out "x" model, /w 100epoch
 Your submission scored 0.99214, which is not an improvement of your best score. Keep trying!
 
+ver 20170306 by jian: help to review the keras model details
+ver 20170308 by jian: test using tensorflow backend for keras, tf actually underperformed compared /w theano on MNIST in
+i) testing accuracy 0.98971 on predicted_x.csv by tf, vs 0.99214 on predicted_x.csv by theano
+ii) per-epoch tr time is longer
+
+
 '''
 
 
-# LOCAL only: on server
+# LOCAL only on server as the server sklearn version is too old, have to use a user installation
 import os
 import sys
 # force to use local packages, in particular, sklearn
@@ -103,6 +104,7 @@ check your ~/.keras/keras.json
 if "image_dim_ordering": is "th" and "backend": "theano", your input_shape must be (channels, height, width)
 if "image_dim_ordering": is "tf" and "backend": "tensorflow", your input_shape must be (height, width, channels)
 '''
+# theano convention
 from keras import backend as K 
 K.set_image_dim_ordering('th') # as running on server now /w th
 
@@ -175,7 +177,7 @@ def x_model():
 #model = larger_model()
 #model = rg_model()
 model = x_model()
-
+print(model.summary())
 # train 
 #N_EPOCH = 3
 #N_EPOCH = 10
@@ -207,8 +209,8 @@ print(submissions.head())
 #submissions.to_csv("predicted.csv", index=False)
 #submissions.to_csv("predicted_100epoch.csv", index=False)
 #submissions.to_csv("predicted_500epoch.csv", index=False) # here we exhausted the potential of this architecture "larger model"
-#submissions.to_csv("predicted_rg.csv", index=False) # here we exhausted the potential of this architecture "larger model"
-submissions.to_csv("predicted_x.csv", index=False) # here we exhausted the potential of this architecture "larger model"
+#submissions.to_csv("predicted_rg.csv", index=False) 
+submissions.to_csv("predicted_x.csv", index=False) 
 
 
 
@@ -290,7 +292,7 @@ submissions.to_csv("predicted_x.csv", index=False) # here we exhausted the poten
 #Baseline Error: 0.91%
 
 '''
-Result of large CNN /w gpu:
+Result of large CNN /w gpu + theano:
 Epoch 1/10
 1s - loss: 0.3776 - acc: 0.8797 - val_loss: 0.0809 - val_acc: 0.9744
 Epoch 2/10
